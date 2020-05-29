@@ -12,6 +12,18 @@ module.exports = {
         allExtensions: true, // Indicates that every file should be parsed as TS or TSX
       },
     },
+    {
+      resolve: "gatsby-plugin-eslint",
+      options: {
+        test: /\.js$|\.jsx$|\.ts$|\.tsx$/,
+        exclude: /(node_modules|.cache|public)/,
+        stages: ["develop"],
+        options: {
+          emitWarning: true,
+          failOnError: false,
+        },
+      },
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
