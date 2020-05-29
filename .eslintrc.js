@@ -23,5 +23,15 @@ module.exports = {
          * https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
          */
         'plugin:react-hooks/recommended',
+
+        /**
+         * This plugin intends to support linting of ES2015+ (ES6+) import/export syntax, and prevent issues
+         * with misspelling of file paths and import names. All the goodness that the ES2015+ static module
+         * syntax intends to provide, marked up in your editor.
+         * https://github.com/benmosher/eslint-plugin-import#rules
+         */
+        'plugin:import/errors',
+        'plugin:import/warnings',
+        'plugin:import/typescript',
     ],
 }
