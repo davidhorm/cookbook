@@ -45,11 +45,20 @@ module.exports = {
          * https://github.com/sindresorhus/eslint-plugin-unicorn#rules
          */
         'plugin:unicorn/recommended',
-        
+
+        /**
+         * An ESLint plugin for linting ESLint plugins
+         * https://github.com/not-an-aardvark/eslint-plugin-eslint-plugin#supported-rules
+         */
+        'plugin:eslint-plugin/recommended',
+
         /**
          * Best practices when disabling ESLint rules
          * https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
          */
         'plugin:eslint-comments/recommended',
     ],
+    plugins: [
+        'eslint-plugin', // Definitions for 'plugin:eslint-plugin/recommended'
+    ]
 }
