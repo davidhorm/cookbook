@@ -33,5 +33,23 @@ module.exports = {
         'plugin:import/errors',
         'plugin:import/warnings',
         'plugin:import/typescript',
+
+        /**
+         * Static AST checker for accessibility rules on JSX elements.
+         * https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules
+         */
+        'plugin:jsx-a11y/recommended',
+
+        /**
+         * Various awesome ESLint rules
+         * https://github.com/sindresorhus/eslint-plugin-unicorn#rules
+         */
+        'plugin:unicorn/recommended',
+        
+        /**
+         * Best practices when disabling ESLint rules
+         * https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
+         */
+        'plugin:eslint-comments/recommended',
     ],
 }
