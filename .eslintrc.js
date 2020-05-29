@@ -57,6 +57,12 @@ module.exports = {
          * https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
          */
         'plugin:eslint-comments/recommended',
+
+        /**
+         * JSDoc linting rules for ESLint.
+         * https://github.com/gajus/eslint-plugin-jsdoc#configuration
+         */
+        'plugin:jsdoc/recommended',
     ],
     plugins: [
         'eslint-plugin', // Definitions for 'plugin:eslint-plugin/recommended'
