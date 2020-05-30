@@ -10,21 +10,21 @@ type props = {
 
   /**
    * A short and accurate summary of the content of the page.
-   * 
+   *
    * @defaultValue ''
    */
   description?: string;
 
   /**
    * The BCP47 code representing the language of the site.
-   * 
+   *
    * @defaultValue 'en'
    */
   lang?: string;
 
   /**
    * Additional <meta> elements to concat to <head>. These can be used to provide document metadata in terms of `{ name, content }` pairs.
-   * 
+   *
    * @defaultValue []
    */
   meta?: HTMLMetaElement[];
