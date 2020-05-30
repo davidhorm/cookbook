@@ -1,3 +1,14 @@
+const mdxPlugins = [
+  {
+    resolve: 'gatsby-source-filesystem',
+    options: {
+      name: 'pages',
+      path: `${__dirname}/src/pages/`,
+    },
+  },
+  'gatsby-plugin-mdx',
+];
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -5,6 +16,7 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
+    ...mdxPlugins,
     {
       resolve: `gatsby-plugin-typescript`,
       options: {
