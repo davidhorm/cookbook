@@ -59,12 +59,6 @@ module.exports = {
     'plugin:eslint-comments/recommended',
 
     /**
-     * JSDoc linting rules for ESLint.
-     * https://github.com/gajus/eslint-plugin-jsdoc#configuration
-     */
-    'plugin:jsdoc/recommended',
-
-    /**
      * 'plugin:jest/recommended' plugin exports a recommended configuration that enforces good testing practices.
      * 'plugin:jest/style' adds some stylistic rules, such as `prefer-to-be-null`, which enforces usage of `toBeNull` over `toBe(null)`.
      * https://github.com/jest-community/eslint-plugin-jest#rules
@@ -103,7 +97,11 @@ module.exports = {
   ],
   plugins: [
     'eslint-plugin', // Definitions for 'plugin:eslint-plugin/recommended'
+    'eslint-plugin-tsdoc',
   ],
+  rules: {
+    'tsdoc/syntax': 'warn',
+  },
   settings: {
     jsdoc: {
       mode: 'typescript', // Allows @template. https://github.com/gajus/eslint-plugin-jsdoc#mode
