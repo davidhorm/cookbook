@@ -1,4 +1,5 @@
 const mdxPlugins = [
+  // Automatically create pages with `.mdx` files in `src/pages`.
   {
     resolve: 'gatsby-source-filesystem',
     options: {
@@ -9,6 +10,39 @@ const mdxPlugins = [
   'gatsby-plugin-mdx',
 ];
 
+const imagePlugins = [
+  {
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `images`,
+      path: `${__dirname}/src/images`,
+    },
+  },
+  `gatsby-transformer-sharp`,
+  `gatsby-plugin-sharp`,
+];
+
+const typescriptPlugin = {
+  resolve: `gatsby-plugin-typescript`,
+  options: {
+    isTSX: true, // Forcibly enables jsx parsing.
+    allExtensions: true, // Indicates that every file should be parsed as TS or TSX
+  },
+};
+
+const eslintPlugin = {
+  resolve: 'gatsby-plugin-eslint',
+  options: {
+    test: /\.js$|\.jsx$|\.ts$|\.tsx$/,
+    exclude: /(node_modules|.cache|public)/,
+    stages: ['develop'],
+    options: {
+      emitWarning: true,
+      failOnError: false,
+    },
+  },
+};
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -17,35 +51,10 @@ module.exports = {
   },
   plugins: [
     ...mdxPlugins,
-    {
-      resolve: `gatsby-plugin-typescript`,
-      options: {
-        isTSX: true, // Forcibly enables jsx parsing.
-        allExtensions: true, // Indicates that every file should be parsed as TS or TSX
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-eslint',
-      options: {
-        test: /\.js$|\.jsx$|\.ts$|\.tsx$/,
-        exclude: /(node_modules|.cache|public)/,
-        stages: ['develop'],
-        options: {
-          emitWarning: true,
-          failOnError: false,
-        },
-      },
-    },
-    `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    typescriptPlugin,
+    eslintPlugin,
+    ...imagePlugins,
+    'gatsby-plugin-react-helmet',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
