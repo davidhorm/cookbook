@@ -5,21 +5,22 @@ const siteMetadata = {
 };
 
 const mdxPlugins = [
-  // Automatically create pages with `.mdx` files in `src/pages`.
-  {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      name: 'pages',
-      path: `${__dirname}/src/pages/`,
-    },
-  },
-  // Use default layout on mdx files.
+  // Add support for *.mdx files in gatsby
   {
     resolve: 'gatsby-plugin-mdx',
     options: {
+      // Use default layout on mdx files.
       defaultLayouts: {
         default: require.resolve('./src/components/Layout/index.tsx'),
       },
+    },
+  },
+  // Automatically create pages with `.mdx` files in `src/recipes`.
+  {
+    resolve: 'gatsby-source-filesystem',
+    options: {
+      name: 'recipes',
+      path: `${__dirname}/src/recipes/`,
     },
   },
 ];
