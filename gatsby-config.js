@@ -25,6 +25,7 @@ const mdxPlugins = [
 ];
 
 const imagePlugins = [
+  // query files with GraphQL
   {
     resolve: `gatsby-source-filesystem`,
     options: {
@@ -32,7 +33,9 @@ const imagePlugins = [
       path: `${__dirname}/src/images`,
     },
   },
+  // create multiples images of the right sizes and resolutions with a query
   `gatsby-transformer-sharp`,
+  // powers the connections between Sharp and Gatsby Plugins
   `gatsby-plugin-sharp`,
 ];
 
