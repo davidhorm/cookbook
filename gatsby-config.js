@@ -1,39 +1,74 @@
-module.exports = {
-  siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+const siteMetadata = {
+  title: 'COOKBOOK',
+  description: 'A smarter way to follow recipes online.',
+  author: 'David Horm',
+};
+
+const mdxPlugins = [
+  // Add support for *.mdx files in gatsby
+  {
+    resolve: 'gatsby-plugin-mdx',
+    options: {
+      // Use default layout on mdx files.
+      defaultLayouts: {
+        default: require.resolve('./src/components/Layout/index.tsx'),
+      },
+    },
   },
+  // Automatically create pages with `.mdx` files in `src/recipes`.
+  {
+    resolve: 'gatsby-source-filesystem',
+    options: {
+      name: 'recipes',
+      path: `${__dirname}/src/recipes/`,
+    },
+  },
+];
+
+const imagePlugins = [
+  // query files with GraphQL
+  {
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `images`,
+      path: `${__dirname}/src/images`,
+    },
+  },
+  // create multiples images of the right sizes and resolutions with a query
+  `gatsby-transformer-sharp`,
+  // powers the connections between Sharp and Gatsby Plugins
+  `gatsby-plugin-sharp`,
+];
+
+const typescriptPlugin = {
+  resolve: `gatsby-plugin-typescript`,
+  options: {
+    isTSX: true, // Forcibly enables jsx parsing.
+    allExtensions: true, // Indicates that every file should be parsed as TS or TSX
+  },
+};
+
+const eslintPlugin = {
+  resolve: 'gatsby-plugin-eslint',
+  options: {
+    test: /\.js$|\.jsx$|\.ts$|\.tsx$/,
+    exclude: /(node_modules|.cache|public)/,
+    stages: ['develop'],
+    options: {
+      emitWarning: true,
+      failOnError: false,
+    },
+  },
+};
+
+module.exports = {
+  siteMetadata,
   plugins: [
-    {
-      resolve: `gatsby-plugin-typescript`,
-      options: {
-        isTSX: true, // Forcibly enables jsx parsing.
-        allExtensions: true, // Indicates that every file should be parsed as TS or TSX
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-eslint',
-      options: {
-        test: /\.js$|\.jsx$|\.ts$|\.tsx$/,
-        exclude: /(node_modules|.cache|public)/,
-        stages: ['develop'],
-        options: {
-          emitWarning: true,
-          failOnError: false,
-        },
-      },
-    },
-    `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    ...mdxPlugins,
+    typescriptPlugin,
+    eslintPlugin,
+    ...imagePlugins,
+    'gatsby-plugin-react-helmet',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
