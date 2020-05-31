@@ -1,6 +1,6 @@
-import { MDXProvider } from "@mdx-js/react";
-import { graphql, Link } from "gatsby";
-import { MDXRenderer } from "gatsby-plugin-mdx";
+import { MDXProvider } from '@mdx-js/react';
+import { graphql, Link } from 'gatsby';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
 import React from 'react';
 
 const shortcodes = { Link }; // Provide common components here

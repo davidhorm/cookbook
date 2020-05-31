@@ -102,6 +102,7 @@ module.exports = {
   rules: {
     'tsdoc/syntax': 'warn',
   },
+  ignorePatterns: ['public'],
   settings: {
     jsdoc: {
       mode: 'typescript', // Allows @template. https://github.com/gajus/eslint-plugin-jsdoc#mode
