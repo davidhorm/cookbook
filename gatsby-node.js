@@ -30,7 +30,7 @@ const createMdxPages = async (graphql, reporter, createPage) => {
     createPage({
       path: node.parent.relativeDirectory,
       // This component will wrap our MDX content
-      component: path.resolve(`./src/components/Layout/index.tsx`),
+      component: path.resolve(`./src/components/RecipeLayout/index.tsx`),
       // You can use the values in this context in
       // our page layout component
       context: { id: node.id },
