@@ -1,3 +1,9 @@
+const siteMetadata = {
+  title: 'COOKBOOK',
+  description: 'A smarter way to follow recipes online.',
+  author: 'David Horm',
+};
+
 const mdxPlugins = [
   // Automatically create pages with `.mdx` files in `src/pages`.
   {
@@ -52,11 +58,7 @@ const eslintPlugin = {
 };
 
 module.exports = {
-  siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
-  },
+  siteMetadata,
   plugins: [
     ...mdxPlugins,
     typescriptPlugin,
