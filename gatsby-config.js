@@ -7,7 +7,15 @@ const mdxPlugins = [
       path: `${__dirname}/src/pages/`,
     },
   },
-  'gatsby-plugin-mdx',
+  // Use default layout on mdx files.
+  {
+    resolve: 'gatsby-plugin-mdx',
+    options: {
+      defaultLayouts: {
+        default: require.resolve('./src/components/Layout/index.tsx'),
+      },
+    },
+  },
 ];
 
 const imagePlugins = [
