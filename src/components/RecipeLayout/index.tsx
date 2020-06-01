@@ -1,5 +1,6 @@
 import { MDXProvider } from '@mdx-js/react';
 import { graphql, Link } from 'gatsby';
+import Img from 'gatsby-image';
 import React from 'react';
 import Layout from '../Layout';
 
@@ -10,13 +11,17 @@ export const RecipeLayout = ({
   pageContext: {
     frontmatter: { title },
   },
-}) => (
-  <MDXProvider components={shortCodes}>
-    <Layout>
-      <h1>{title}</h1>
-      {children}
-    </Layout>
-  </MDXProvider>
-);
+  data: { mdx },
+}) => {
+  return (
+    <MDXProvider components={shortCodes}>
+      <Layout>
+        <Img fluid={mdx.frontmatter.image.childImageSharp.fluid} />
+        <h1>{title}</h1>
+        {children}
+      </Layout>
+    </MDXProvider>
+  );
+};
 
 export default RecipeLayout;

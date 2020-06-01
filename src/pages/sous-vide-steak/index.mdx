@@ -1,7 +1,23 @@
 ---
 title: Sous Vide Steak
-image: sous-vide-salmon-doneness.jpg
+image: sous-vide-steak-doneness.jpg
 ---
+
+export const pageQuery = graphql`
+  query {
+    mdx(frontmatter: {title: {eq: "Sous Vide Steak"}}) {
+      frontmatter {
+        image {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 | Doneness | Temperature |
 |-|-|

@@ -3,6 +3,22 @@ title: Sous Vide Salmon
 image: sous-vide-salmon-doneness.jpg
 ---
 
+export const pageQuery = graphql`
+  query {
+    mdx(frontmatter: {title: {eq: "Sous Vide Salmon"}}) {
+      frontmatter {
+        image {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 | Texture | Temperature |
 |-|-|
 | Like firm sashimi | 105°F (41°C) |
