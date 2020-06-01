@@ -1,10 +1,7 @@
 ---
-title: Test Page
+title: Sous Vide Salmon
+image: sous-vide-salmon-doneness.jpg
 ---
-
-import { graphql } from 'gatsby';
-
-<h1>{props.pageContext.frontmatter.title}</h1>
 
 | Texture | Temperature |
 |-|-|
@@ -13,14 +10,3 @@ import { graphql } from 'gatsby';
 | Translucent and starting to flake | 115°F (46°C) |
 | Very moist, tender, and flaky | 120°F (49°C) |
 | Firm, moist, and flaky | 130°F (54°C) |
-
-<p>{console.log('props', props)}</p>
-
-export const pageQuery = graphql`
-  query {
-    mdx {
-      fileAbsolutePath
-      id
-    }
-  }
-`;

@@ -11,7 +11,7 @@ const mdxPlugins = [
     options: {
       // Use default layout on mdx files.
       defaultLayouts: {
-        default: require.resolve('./src/components/Layout/index.tsx'),
+        default: require.resolve('./src/components/RecipeLayout/index.tsx'),
       },
     },
   },
@@ -19,8 +19,8 @@ const mdxPlugins = [
   {
     resolve: 'gatsby-source-filesystem',
     options: {
-      name: 'recipes',
-      path: `${__dirname}/src/recipes/`,
+      name: 'pages',
+      path: `${__dirname}/src/pages/`,
     },
   },
 ];
