@@ -4,4 +4,8 @@
     "source.organizeImports": true,
     "source.fixAll": true,
   },
+  // Words to add to dictionary for spellchecker.
+  "cSpell.words": [
+    "frontmatter"
+  ],
 }
