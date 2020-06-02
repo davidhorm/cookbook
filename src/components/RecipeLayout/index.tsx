@@ -6,13 +6,24 @@ import Layout from '../Layout';
 import { useRecipeImages } from './use-recipe-image';
 
 const shortCodes = { Link, graphql }; // Provide common components here
+
+type props = {
+  children: any;
+  pageContext: {
+    frontmatter: {
+      title: string;
+      imageAlt: string;
+    };
+  };
+  data: any;
+};
 export const RecipeLayout = ({
   children,
   pageContext: {
     frontmatter: { title, imageAlt },
   },
   data,
-}) => {
+}: props) => {
   const edges = useRecipeImages();
   const {
     node: {
