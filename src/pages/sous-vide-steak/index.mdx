@@ -1,23 +1,8 @@
 ---
 title: Sous Vide Steak
 image: sous-vide-steak-doneness.jpg
+imageAlt: Steak doneness by tempurature
 ---
-
-export const pageQuery = graphql`
-  query {
-    mdx(frontmatter: {title: {eq: "Sous Vide Steak"}}) {
-      frontmatter {
-        image {
-          childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 
 | Doneness | Temperature |
 |-|-|
