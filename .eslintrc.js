@@ -101,6 +101,15 @@ module.exports = {
   ],
   rules: {
     'tsdoc/syntax': 'warn',
+
+    // Ignore kebabCase rule for React component files.
+    'unicorn/filename-case': [
+      'error',
+      {
+        case: 'kebabCase',
+        ignore: ['.tsx'],
+      },
+    ],
   },
   ignorePatterns: ['public'],
   settings: {

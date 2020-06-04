@@ -1,36 +1,18 @@
 import { MDXProvider } from '@mdx-js/react';
 import { graphql, Link } from 'gatsby';
-import Img, { FluidObject } from 'gatsby-image';
+import Img from 'gatsby-image';
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import Layout from '../Layout';
+import { RecipeSchema } from './RecipeSchema';
 import { useRecipeMetadata } from './use-recipe-metadata';
-
-type frontmatter = {
-  title: string;
-  imageAlt: string;
-};
-
-const getHelmet = ({ title }: frontmatter, fluid: FluidObject, birthtime: Date) => (
-  <Helmet title={title}>
-    <script type="application/ld+json">{`
-      {
-        "@context": "https://schema.org/",
-        "@type": "Recipe",
-        "name": "${title}",
-        "image": [
-          "${fluid.src}"
-        ],
-        "datePublished": "${birthtime}"
-      }
-    `}</script>
-  </Helmet>
-);
 
 type props = {
   children: any;
   pageContext: {
-    frontmatter: frontmatter;
+    frontmatter: {
+      title: string;
+      imageAlt: string;
+    };
   };
   data: any;
 };
@@ -38,7 +20,13 @@ type props = {
 /**
  * Layout for Recipe MDX files.
  */
-export const RecipeLayout = ({ children, pageContext: { frontmatter }, data }: props) => {
+export const RecipeLayout = ({
+  children,
+  pageContext: {
+    frontmatter: { title, imageAlt },
+  },
+  data,
+}: props) => {
   const edges = useRecipeMetadata();
   console.log('edges', edges);
   const {
@@ -50,14 +38,14 @@ export const RecipeLayout = ({ children, pageContext: { frontmatter }, data }: p
       },
       parent: { birthtime },
     },
-  } = edges.filter((edge) => edge.node.frontmatter.title === frontmatter.title)[0];
+  } = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
 
   return (
     <MDXProvider components={{ Link, graphql }}>
-      {getHelmet(frontmatter, fluid, birthtime)}
+      <RecipeSchema name={title} imageSrc={fluid.src} datePublished={birthtime} />
       <Layout>
-        <Img fluid={fluid} alt={frontmatter.imageAlt} />
-        <h1>{frontmatter.title}</h1>
+        <Img fluid={fluid} alt={imageAlt} />
+        <h1>{title}</h1>
         {children}
       </Layout>
     </MDXProvider>
