@@ -2,9 +2,9 @@ import { MDXProvider } from '@mdx-js/react';
 import { graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 import React from 'react';
+import { useRecipeMetadata } from '../../queries/use-recipe-metadata';
 import Layout from '../Layout';
 import { RecipeSchema } from './RecipeSchema';
-import { useRecipeMetadata } from './use-recipe-metadata';
 
 type props = {
   children: any;
@@ -28,7 +28,6 @@ export const RecipeLayout = ({
   data,
 }: props) => {
   const edges = useRecipeMetadata();
-  console.log('edges', edges);
   const {
     node: {
       frontmatter: {
