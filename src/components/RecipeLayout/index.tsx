@@ -7,7 +7,6 @@ import Layout from '../Layout';
 import { RecipeSchema } from './RecipeSchema';
 
 type props = {
-  children: any;
   pageContext: {
     frontmatter: {
       title: string;
@@ -26,7 +25,7 @@ export const RecipeLayout = ({
     frontmatter: { title, imageAlt },
   },
   data,
-}: props) => {
+}: React.PropsWithChildren<props>) => {
   const edges = useRecipeMetadata();
   const {
     node: {
@@ -40,14 +39,12 @@ export const RecipeLayout = ({
   } = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
 
   return (
-    <MDXProvider components={{ Link, graphql }}>
+    <Layout>
       <RecipeSchema name={title} imageSrc={fluid.src} datePublished={birthtime} />
-      <Layout>
-        <Img fluid={fluid} alt={imageAlt} />
-        <h1>{title}</h1>
-        {children}
-      </Layout>
-    </MDXProvider>
+      <Img fluid={fluid} alt={imageAlt} />
+      <h1>{title}</h1>
+      <MDXProvider components={{ Link, graphql }}>{children}</MDXProvider>
+    </Layout>
   );
 };
 
