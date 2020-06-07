@@ -65,7 +65,7 @@ export const RecipeSchema = ({ name, imageSrc, datePublished, author }: props) =
         "@type": "Recipe",
         "name": "${name}",
         "image": [
-          "${imageSrc}"
+          "${siteMetadata.domain}${siteMetadata.pathPrefix}${imageSrc}"
         ],
         "author": {
           "@type": "Person",

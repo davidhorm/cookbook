@@ -2,6 +2,8 @@ const siteMetadata = {
   title: 'COOKBOOK',
   description: 'A personal collection of recipes.',
   author: 'David Horm',
+  domain: 'https://davidhorm.github.io',
+  pathPrefix: '/cookbook',
 };
 
 const mdxPlugins = [

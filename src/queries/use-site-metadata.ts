@@ -9,6 +9,12 @@ type siteMetadata = {
 
   /** Author of the site. */
   author: string;
+
+  /** 'https://davidhorm.github.io' */
+  domain: string;
+
+  /** '/cookbook' */
+  pathPrefix: string;
 };
 
 /** Query `siteMetadata` object from `gatsby-config.js` file. */
@@ -22,6 +28,8 @@ export const useSiteMetadata = (): siteMetadata => {
           title
           description
           author
+          domain
+          pathPrefix
         }
       }
     }
