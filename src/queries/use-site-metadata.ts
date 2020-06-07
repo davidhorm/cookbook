@@ -1,8 +1,13 @@
 import { graphql, useStaticQuery } from 'gatsby';
 
 type siteMetadata = {
+  /** Title of the site. */
   title: string;
+
+  /** Description of the site. */
   description: string;
+
+  /** Author of the site. */
   author: string;
 };
 
@@ -10,18 +15,16 @@ type siteMetadata = {
 export const useSiteMetadata = (): siteMetadata => {
   const {
     site: { siteMetadata },
-  } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
+  } = useStaticQuery(graphql`
+    query SiteMetadata {
+      site {
+        siteMetadata {
+          title
+          description
+          author
         }
       }
-    `
-  );
+    }
+  `);
   return siteMetadata;
 };
