@@ -59,20 +59,6 @@ module.exports = {
     'plugin:eslint-comments/recommended',
 
     /**
-     * 'plugin:jest/recommended' plugin exports a recommended configuration that enforces good testing practices.
-     * 'plugin:jest/style' adds some stylistic rules, such as `prefer-to-be-null`, which enforces usage of `toBeNull` over `toBe(null)`.
-     * https://github.com/jest-community/eslint-plugin-jest#rules
-     */
-    'plugin:jest/recommended',
-    'plugin:jest/style',
-
-    /**
-     * ESLint plugin to follow best practices and anticipate common mistakes when writing tests with jest-dom.
-     * https://github.com/testing-library/eslint-plugin-jest-dom#supported-rules
-     */
-    'plugin:jest-dom/recommended',
-
-    /**
      * SonarJS rules for ESLint to detect bugs and suspicious patterns in your code.
      * https://github.com/SonarSource/eslint-plugin-sonarjs#eslint-plugin-sonarjs----
      */
@@ -113,6 +99,19 @@ module.exports = {
   overrides: [
     {
       files: ['*.spec.[jt]s[x]'],
+      extends: [
+        /**
+         * ESLint plugin for Jest. Enabling all rules.
+         * https://github.com/jest-community/eslint-plugin-jest#rules
+         */
+        'plugin:jest/all',
+
+        /**
+         * ESLint plugin to follow best practices and anticipate common mistakes when writing tests with jest-dom.
+         * https://github.com/testing-library/eslint-plugin-jest-dom#supported-rules
+         */
+        'plugin:jest-dom/recommended',
+      ],
       rules: {
         // Turn on mostly all testing-library rules
         // https://github.com/testing-library/eslint-plugin-testing-library#supported-rules
