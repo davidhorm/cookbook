@@ -73,13 +73,6 @@ module.exports = {
     'plugin:jest-dom/recommended',
 
     /**
-     * ESLint plugin to follow best practices and anticipate common mistakes when writing tests with Testing Library.
-     * https://github.com/testing-library/eslint-plugin-testing-library#supported-rules
-     */
-    'plugin:testing-library/recommended',
-    'plugin:testing-library/react',
-
-    /**
      * SonarJS rules for ESLint to detect bugs and suspicious patterns in your code.
      * https://github.com/SonarSource/eslint-plugin-sonarjs#eslint-plugin-sonarjs----
      */
@@ -98,6 +91,12 @@ module.exports = {
   plugins: [
     'eslint-plugin', // Definitions for 'plugin:eslint-plugin/recommended'
     'eslint-plugin-tsdoc',
+
+    /**
+     * ESLint plugin to follow best practices and anticipate common mistakes when writing tests with Testing Library.
+     * https://github.com/testing-library/eslint-plugin-testing-library#supported-rules
+     */
+    'testing-library',
   ],
   rules: {
     'tsdoc/syntax': 'warn',
@@ -111,6 +110,27 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['*.spec.[jt]s[x]'],
+      rules: {
+        // Turn on mostly all testing-library rules
+        // https://github.com/testing-library/eslint-plugin-testing-library#supported-rules
+        'testing-library/await-async-query': 'error',
+        'testing-library/await-async-utils': 'error',
+        'testing-library/no-await-sync-query': 'error',
+        'testing-library/no-debug': 'warn',
+        'testing-library/no-dom-import': 'error',
+        'testing-library/no-wait-for-empty-callback	': 'error',
+        'testing-library/no-wait-for-empty-callback': 'error',
+        'testing-library/prefer-explicit-assert': 'error',
+        'testing-library/prefer-find-by': 'error',
+        'testing-library/prefer-presence-queries': 'error',
+        'testing-library/prefer-screen-queries': 'error',
+        'testing-library/prefer-wait-for': 'error',
+      },
+    },
+  ],
   ignorePatterns: ['public', '__mocks__', 'setup-test-env.js'],
   settings: {
     jsdoc: {
