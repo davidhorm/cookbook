@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { useSiteMetadata } from '../../queries/use-site-metadata';
 
 type props = {
   /** The name of the dish. */
@@ -15,10 +16,10 @@ type props = {
   /** The date the recipe was published. */
   datePublished: Date;
 
+  /** The name of the person that wrote the recipe. Defaults to the author set in Site Metadata. */
+  author?: string;
+
   /**
-   * The name of the person or organization that wrote the recipe.
-   * author: string;
-   *
    * A short summary describing the dish.
    * description: string;
    *
@@ -54,9 +55,11 @@ type props = {
 /**
  * Add Recipe Structured Data to the page.
  */
-export const RecipeSchema = ({ name, imageSrc, datePublished }: props) => (
-  <Helmet title={name}>
-    <script type="application/ld+json">{`
+export const RecipeSchema = ({ name, imageSrc, datePublished, author }: props) => {
+  const siteMetadata = useSiteMetadata();
+  return (
+    <Helmet title={name} titleTemplate={`%s | ${siteMetadata.title}`}>
+      <script type="application/ld+json">{`
       {
         "@context": "https://schema.org/",
         "@type": "Recipe",
@@ -64,8 +67,13 @@ export const RecipeSchema = ({ name, imageSrc, datePublished }: props) => (
         "image": [
           "${imageSrc}"
         ],
+        "author": {
+          "@type": "Person",
+          "name": "${author || siteMetadata.author}"
+        },
         "datePublished": "${datePublished}"
       }
     `}</script>
-  </Helmet>
-);
+    </Helmet>
+  );
+};
