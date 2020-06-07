@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { useStaticQuery, graphql } from 'gatsby';
+import { useSiteMetadata } from '../../queries/use-site-metadata';
 
 type props = {
   /**
@@ -34,22 +34,8 @@ type props = {
  * SEO component that overwrites the values in the document <head>.
  */
 function SEO({ description = '', lang = 'en', meta = [], title }: props) {
-  // See: https://www.gatsbyjs.org/docs/use-static-query/
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
-  );
-
-  const metaDescription = description || site.siteMetadata.description;
+  const siteMetadata = useSiteMetadata();
+  const metaDescription = description || siteMetadata.description;
 
   return (
     <Helmet
@@ -57,7 +43,7 @@ function SEO({ description = '', lang = 'en', meta = [], title }: props) {
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s | ${siteMetadata.title}`}
       meta={[
         {
           name: `description`,

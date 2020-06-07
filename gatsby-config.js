@@ -1,6 +1,6 @@
 const siteMetadata = {
   title: 'COOKBOOK',
-  description: 'A smarter way to follow recipes online.',
+  description: 'A personal collection of recipes.',
   author: 'David Horm',
 };
 
