@@ -1,21 +1,26 @@
-import React from 'react';
 import { Link } from 'gatsby';
-
+import React from 'react';
 import Layout from '../components/Layout';
-import Image from '../components/Image';
 import SEO from '../components/SEO';
+import { useRecipeMetadata } from '../queries/use-recipe-metadata';
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-);
+const IndexPage = () => {
+  const edges = useRecipeMetadata();
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <h1>My Recipes</h1>
+      <p>Look at all of the recipes I created!</p>
+
+      <ul>
+        {edges.map(({ node: { frontmatter: { title }, parent: { relativeDirectory } } }) => (
+          <li key={relativeDirectory}>
+            <Link to={`/${relativeDirectory}`}>{title}</Link>
+          </li>
+        ))}
+      </ul>
+    </Layout>
+  );
+};
 
 export default IndexPage;

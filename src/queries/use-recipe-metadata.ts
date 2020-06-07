@@ -17,9 +17,13 @@ type edge = {
     parent: {
       /** Recipe publish date */
       birthtime: Date;
+
+      /** Relative path to Recipe (without slash) */
+      relativeDirectory: string;
     };
   };
 };
+/** Query all Recipe MDX files and their metadata. */
 export const useRecipeMetadata = (): edge[] => {
   const result = useStaticQuery(graphql`
     query RecipeMetadata {
@@ -27,9 +31,7 @@ export const useRecipeMetadata = (): edge[] => {
         edges {
           node {
             frontmatter {
-              # Recipe Title
               title
-              # Recipe Image
               image {
                 childImageSharp {
                   fluid {
@@ -40,8 +42,8 @@ export const useRecipeMetadata = (): edge[] => {
             }
             parent {
               ... on File {
-                # Recipe Publish Date
                 birthtime
+                relativeDirectory
               }
             }
           }
