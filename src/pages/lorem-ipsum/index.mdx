@@ -1,0 +1,26 @@
+---
+title: Lorem Ipsum
+image: kitchen-shelves.jpg
+imageAlt: Kitchen Shelves
+---
+
+export const ingredients = {
+    chickenBroth: '3 teaspoons = 1 tablespoon Chicken Broth',
+    tomatoPaste: '1-1/2 teaspoons = 1/2 tablespoon Tomato Paste',
+    flour: '4 tablespoons = 1/4 cup Flour',
+    eggs: '8 tablespoons = 1/2 cup Eggs',
+    garlic: '16 tablespoons = 1 cup Garlic',
+    cheese: '1 cup = 1/2 pint Cheese',
+    rice: '2 cups = 1 pint Rice',
+    groundMeat: '4 cups = 1 quart Ground Meat',
+    onions: '2 pints = 1 quart Onions',
+    oil: '1 cup = 8 fluid ounces canola oil',
+    vinegar: '32 ounces = 1 quart Vinegar',
+    potatoes: '2 quarts = 1/2 gallon Potatoes',
+    salt: '4 quarts = 1 gallon Salt',
+    butter: '1 stick of butter = 8 tablespoons = 1/2 cup Butter',
+};
+
+<ul>
+{Object.values(ingredients).map(ingredient => <li>{ingredient}</li>)}
+</ul>
