@@ -53,27 +53,36 @@ type props = {
 };
 
 /**
- * Add Recipe Structured Data to the page.
+ * Get the stringify Recipe Schema Object.
+ * @param siteMetadata - Site metadata.
  */
-export const RecipeSchema = ({ name, imageSrc, datePublished, author }: props) => {
+const getRecipeSchema = (
+  siteMetadata: ReturnType<typeof useSiteMetadata>,
+  { name, imageSrc, datePublished, author }: props
+) => {
+  const recipeSchema = {
+    '@context': 'https://schema.org/',
+    '@type': 'Recipe',
+    name,
+    datePublished,
+    'image': [`${siteMetadata.domain}${siteMetadata.pathPrefix}${imageSrc}`],
+    'author': {
+      '@type': 'Person',
+      'name': `${author || siteMetadata.author}`,
+    },
+  };
+
+  return JSON.stringify(recipeSchema);
+};
+
+/**
+ * Add Recipe Title and Structured Data to the <head>.
+ */
+export const RecipeSchema = (properties: props) => {
   const siteMetadata = useSiteMetadata();
   return (
-    <Helmet title={name} titleTemplate={`%s | ${siteMetadata.title}`}>
-      <script type="application/ld+json">{`
-      {
-        "@context": "https://schema.org/",
-        "@type": "Recipe",
-        "name": "${name}",
-        "image": [
-          "${siteMetadata.domain}${siteMetadata.pathPrefix}${imageSrc}"
-        ],
-        "author": {
-          "@type": "Person",
-          "name": "${author || siteMetadata.author}"
-        },
-        "datePublished": "${datePublished.toISOString()}"
-      }
-    `}</script>
+    <Helmet title={properties.name} titleTemplate={`%s | ${siteMetadata.title}`}>
+      <script type="application/ld+json">{getRecipeSchema(siteMetadata, properties)}</script>
     </Helmet>
   );
 };
