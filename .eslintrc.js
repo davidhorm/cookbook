@@ -127,6 +127,10 @@ module.exports = {
         'testing-library/prefer-presence-queries': 'error',
         'testing-library/prefer-screen-queries': 'error',
         'testing-library/prefer-wait-for': 'error',
+
+        // https://github.com/jest-community/eslint-plugin-jest/blob/master/docs/rules/prefer-expect-assertions.md
+        'jest/prefer-expect-assertions': 'off', // Not my style
+        'jest/lowercase-name': 'off', // Only turned on for `it`
       },
     },
   ],

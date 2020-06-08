@@ -71,7 +71,7 @@ export const RecipeSchema = ({ name, imageSrc, datePublished, author }: props) =
           "@type": "Person",
           "name": "${author || siteMetadata.author}"
         },
-        "datePublished": "${datePublished}"
+        "datePublished": "${datePublished.toISOString()}"
       }
     `}</script>
     </Helmet>
