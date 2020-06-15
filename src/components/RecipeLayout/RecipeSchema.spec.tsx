@@ -28,6 +28,7 @@ describe('<RecipeSchema>', () => {
   });
 
   describe('Recipe Structured Data', () => {
+    const structuredDataQuery = 'script[type="application/ld+json"]';
     const expectedDefaultRecipeSchemaObject = Object.freeze({
       '@context': 'https://schema.org/',
       '@type': 'Recipe',
@@ -43,7 +44,7 @@ describe('<RecipeSchema>', () => {
     it('should render default values GIVEN only required props', async () => {
       render(<RecipeSchema {...mockRecipeMetadata} />);
       await waitFor(() => {
-        const actual = JSON.parse(document.querySelector('script[type="application/ld+json"]')?.textContent || '');
+        const actual = JSON.parse(document.querySelector(structuredDataQuery)?.textContent || '');
         expect(actual).toStrictEqual(expectedDefaultRecipeSchemaObject);
       });
     });
@@ -51,12 +52,21 @@ describe('<RecipeSchema>', () => {
     it('should render author name GIVEN author props', async () => {
       render(<RecipeSchema {...mockRecipeMetadata} author="Another Gal" />);
       await waitFor(() => {
-        const actual = JSON.parse(document.querySelector('script[type="application/ld+json"]')?.textContent || '');
+        const actual = JSON.parse(document.querySelector(structuredDataQuery)?.textContent || '');
         const author = {
           '@type': 'Person',
           'name': 'Another Gal',
         };
         expect(actual).toStrictEqual({ ...expectedDefaultRecipeSchemaObject, author });
+      });
+    });
+
+    it('should render recipeIngredient array GIVEN recipeIngredient props', async () => {
+      const recipeIngredient = ['one', 'two'];
+      render(<RecipeSchema {...mockRecipeMetadata} recipeIngredient={recipeIngredient} />);
+      await waitFor(() => {
+        const actual = JSON.parse(document.querySelector(structuredDataQuery)?.textContent || '');
+        expect(actual).toStrictEqual({ ...expectedDefaultRecipeSchemaObject, ...{ recipeIngredient } });
       });
     });
   });

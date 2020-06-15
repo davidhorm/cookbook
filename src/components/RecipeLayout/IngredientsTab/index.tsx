@@ -11,9 +11,14 @@ export const IngredientsTab = ({ ...other }) => (
 
 type props = {
   hidden: boolean;
+  ingredients: string[];
 };
-export const IngredientsTabPanel = ({ hidden }: props) => (
+export const IngredientsTabPanel = ({ hidden, ingredients }: props) => (
   <section role="tabpanel" hidden={hidden} id={tabPanelId} aria-labelledby={tabId}>
-    Ingredient TODO
+    <ol>
+      {ingredients.map((ingredient) => (
+        <li key={ingredient}>{ingredient}</li>
+      ))}
+    </ol>
   </section>
 );

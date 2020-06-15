@@ -4,7 +4,7 @@ image: kitchen-shelves.jpg
 imageAlt: Kitchen Shelves
 ---
 
-export const ingredients = {
+export const i = {
     chickenBroth: '3 teaspoons = 1 tablespoon Chicken Broth',
     tomatoPaste: '1-1/2 teaspoons = 1/2 tablespoon Tomato Paste',
     flour: '4 tablespoons = 1/4 cup Flour',
@@ -21,6 +21,6 @@ export const ingredients = {
     butter: '1 stick of butter = 8 tablespoons = 1/2 cup Butter',
 };
 
-<ul>
-{Object.values(ingredients).map(ingredient => <li>{ingredient}</li>)}
-</ul>
+<p>Add the {i.salt} to the {i.chickenBroth}.</p>
+
+I'll figure out the rest later.

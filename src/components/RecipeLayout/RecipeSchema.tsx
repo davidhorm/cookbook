@@ -19,6 +19,9 @@ type props = {
   /** The name of the person that wrote the recipe. Defaults to the author set in Site Metadata. */
   author?: string;
 
+  /** List of ingredients (and amounts) used in the recipe. */
+  recipeIngredient?: string[];
+
   /**
    * A short summary describing the dish.
    * description: string;
@@ -45,9 +48,6 @@ type props = {
    * Other terms for your recipe such as the season ("summer"), the holiday ("Halloween"), or other descriptors ("quick", "easy", "authentic").
    * keywords: string[];
    *
-   * List of ingredients (and amounts) used in the recipe.
-   * recipeIngredient: string[];
-   *
    * recipeInstructions? Or use HowToStep script within recipe itself?
    */
 };
@@ -58,7 +58,7 @@ type props = {
  */
 const getRecipeSchema = (
   siteMetadata: ReturnType<typeof useSiteMetadata>,
-  { name, imageSrc, datePublished, author }: props
+  { name, imageSrc, datePublished, author, recipeIngredient }: props
 ) => {
   const recipeSchema = {
     '@context': 'https://schema.org/',
@@ -70,6 +70,7 @@ const getRecipeSchema = (
       '@type': 'Person',
       'name': `${author || siteMetadata.author}`,
     },
+    ...(Array.isArray(recipeIngredient) && recipeIngredient.length > 0 ? { recipeIngredient } : {}),
   };
 
   return JSON.stringify(recipeSchema);

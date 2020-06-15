@@ -33,12 +33,13 @@ export const RecipeLayout = ({
   const edges = useRecipeMetadata();
   const {
     node: {
+      exports: { ingredients },
       frontmatter: {
         image: {
           childImageSharp: { fluid },
         },
       },
-      parent: { birthtime },
+      parent: { changeTime },
     },
   } = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
 
@@ -46,7 +47,7 @@ export const RecipeLayout = ({
 
   return (
     <Layout>
-      <RecipeSchema name={title} imageSrc={fluid.src} datePublished={birthtime} />
+      <RecipeSchema name={title} imageSrc={fluid.src} datePublished={changeTime} recipeIngredient={ingredients} />
       <Img fluid={fluid} alt={imageAlt} />
       <h1>{title}</h1>
       <Tabs
@@ -59,12 +60,11 @@ export const RecipeLayout = ({
         <InstructionsTab />
         <InformationTab />
       </Tabs>
-      <IngredientsTabPanel hidden={tabIndex !== 0} />
+      <IngredientsTabPanel hidden={tabIndex !== 0} ingredients={ingredients} />
       <InstructionsTabPanel hidden={tabIndex !== 1}>
         <MDXProvider components={{ Link, graphql }}>{children}</MDXProvider>
       </InstructionsTabPanel>
       <InformationTabPanel hidden={tabIndex !== 2} />
-      <div>tab index = {tabIndex}</div>
     </Layout>
   );
 };

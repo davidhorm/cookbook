@@ -3,6 +3,10 @@ import { FluidObject } from 'gatsby-image';
 
 type edge = {
   node: {
+    exports: {
+      /** List of ingredients */
+      ingredients: string[];
+    };
     frontmatter: {
       /** Recipe title */
       title: string;
@@ -16,7 +20,7 @@ type edge = {
     };
     parent: {
       /** Recipe publish date */
-      birthtime: Date;
+      changeTime: Date;
 
       /** Relative path to Recipe (without slash) */
       relativeDirectory: string;
@@ -30,6 +34,9 @@ export const useRecipeMetadata = (): edge[] => {
       allMdx {
         edges {
           node {
+            exports {
+              ingredients
+            }
             frontmatter {
               title
               image {
@@ -42,7 +49,7 @@ export const useRecipeMetadata = (): edge[] => {
             }
             parent {
               ... on File {
-                birthtime
+                changeTime
                 relativeDirectory
               }
             }
