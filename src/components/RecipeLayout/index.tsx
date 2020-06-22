@@ -13,27 +13,20 @@ import { RecipeSchema } from './RecipeSchema';
 
 const shortCodes = { Link, graphql, Ingredient };
 
-type props = {
-  pageContext: {
-    frontmatter: {
-      title: string;
-      imageAlt: string;
-    };
+type PageContext = {
+  frontmatter: {
+    title: string;
+    imageAlt: string;
   };
-  data: any;
 };
 
 /**
- * Layout for Recipe MDX files.
+ * Extract specific properties from props.
  */
-export const RecipeLayout = ({
-  children,
-  pageContext: {
+const getProperties = (pageContext: PageContext, edges: ReturnType<typeof useRecipeMetadata>) => {
+  const {
     frontmatter: { title, imageAlt },
-  },
-  data,
-}: React.PropsWithChildren<props>) => {
-  const edges = useRecipeMetadata();
+  } = pageContext;
   const {
     node: {
       exports: { ingredients },
@@ -45,6 +38,21 @@ export const RecipeLayout = ({
       parent: { changeTime },
     },
   } = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
+
+  return { title, imageAlt, ingredients, fluid, changeTime };
+};
+
+type props = {
+  pageContext: PageContext;
+  data: any;
+};
+
+/**
+ * Layout for Recipe MDX files.
+ */
+export const RecipeLayout = ({ children, pageContext, data }: React.PropsWithChildren<props>) => {
+  const edges = useRecipeMetadata();
+  const { title, imageAlt, ingredients, fluid, changeTime } = getProperties(pageContext, edges);
 
   const [tabIndex, setTabIndex] = React.useState(0);
 
