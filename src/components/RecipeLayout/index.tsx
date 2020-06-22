@@ -11,8 +11,6 @@ import { IngredientsTab, IngredientsTabPanel } from './IngredientsTab';
 import { InstructionsTab, InstructionsTabPanel } from './InstructionsTab';
 import { RecipeSchema } from './RecipeSchema';
 
-const shortCodes = { Link, graphql, Ingredient };
-
 type PageContext = {
   frontmatter: {
     title: string;
@@ -55,6 +53,12 @@ export const RecipeLayout = ({ children, pageContext, data }: React.PropsWithChi
   const { title, imageAlt, ingredients, fluid, changeTime } = getProperties(pageContext, edges);
 
   const [tabIndex, setTabIndex] = React.useState(0);
+
+  const shortCodes = {
+    Link,
+    graphql,
+    Ingredient: (properties: any) => <Ingredient ratio="1" {...properties} />,
+  };
 
   return (
     <Layout>
