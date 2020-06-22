@@ -4,11 +4,14 @@ import { graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 import React from 'react';
 import { useRecipeMetadata } from '../../queries/use-recipe-metadata';
+import { Ingredient } from '../Ingredient';
 import Layout from '../Layout';
 import { InformationTab, InformationTabPanel } from './InformationTab';
 import { IngredientsTab, IngredientsTabPanel } from './IngredientsTab';
 import { InstructionsTab, InstructionsTabPanel } from './InstructionsTab';
 import { RecipeSchema } from './RecipeSchema';
+
+const shortCodes = { Link, graphql, Ingredient };
 
 type props = {
   pageContext: {
@@ -62,7 +65,7 @@ export const RecipeLayout = ({
       </Tabs>
       <IngredientsTabPanel hidden={tabIndex !== 0} ingredients={ingredients} />
       <InstructionsTabPanel hidden={tabIndex !== 1}>
-        <MDXProvider components={{ Link, graphql }}>{children}</MDXProvider>
+        <MDXProvider components={shortCodes}>{children}</MDXProvider>
       </InstructionsTabPanel>
       <InformationTabPanel hidden={tabIndex !== 2} />
     </Layout>
