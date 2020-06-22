@@ -1,10 +1,7 @@
 import Tabs from '@material-ui/core/Tabs';
-import { MDXProvider } from '@mdx-js/react';
-import { graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 import React from 'react';
 import { useRecipeMetadata } from '../../queries/use-recipe-metadata';
-import { Ingredient } from '../Ingredient';
 import Layout from '../Layout';
 import { InformationTab, InformationTabPanel } from './InformationTab';
 import { IngredientsTab, IngredientsTabPanel } from './IngredientsTab';
@@ -54,12 +51,6 @@ export const RecipeLayout = ({ children, pageContext, data }: React.PropsWithChi
 
   const [tabIndex, setTabIndex] = React.useState(0);
 
-  const shortCodes = {
-    Link,
-    graphql,
-    Ingredient: (properties: any) => <Ingredient ratio="1" {...properties} />,
-  };
-
   return (
     <Layout>
       <RecipeSchema name={title} imageSrc={fluid.src} datePublished={changeTime} recipeIngredient={ingredients} />
@@ -76,9 +67,7 @@ export const RecipeLayout = ({ children, pageContext, data }: React.PropsWithChi
         <InformationTab />
       </Tabs>
       <IngredientsTabPanel hidden={tabIndex !== 0} ingredients={ingredients} />
-      <InstructionsTabPanel hidden={tabIndex !== 1}>
-        <MDXProvider components={shortCodes}>{children}</MDXProvider>
-      </InstructionsTabPanel>
+      <InstructionsTabPanel hidden={tabIndex !== 1}>{children}</InstructionsTabPanel>
       <InformationTabPanel hidden={tabIndex !== 2} />
     </Layout>
   );
