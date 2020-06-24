@@ -65,3 +65,20 @@ export const useRecipeMetadata = (): edge[] => {
 
   return result.allMdx.edges;
 };
+
+/** Parse and flatten the RecipeMetadata edge into single object of props. */
+export const parseRecipeMetadata = ({
+  node: {
+    exports: { ingredients },
+    frontmatter: {
+      image: {
+        childImageSharp: { fluid },
+      },
+    },
+    parent: { changeTime },
+  },
+}: edge) => ({
+  ingredients,
+  fluid,
+  changeTime,
+});

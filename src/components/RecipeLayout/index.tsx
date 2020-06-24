@@ -1,53 +1,37 @@
 import Tabs from '@material-ui/core/Tabs';
 import Img from 'gatsby-image';
 import React from 'react';
-import { useRecipeMetadata } from '../../queries/use-recipe-metadata';
+import { parseRecipeMetadata, useRecipeMetadata } from '../../queries/use-recipe-metadata';
 import Layout from '../Layout';
 import { InformationTab, InformationTabPanel } from './InformationTab';
 import { IngredientsTab, IngredientsTabPanel } from './IngredientsTab';
 import { InstructionsTab, InstructionsTabPanel } from './InstructionsTab';
 import { RecipeSchema } from './RecipeSchema';
 
-type PageContext = {
-  frontmatter: {
-    title: string;
-    imageAlt: string;
-  };
-};
-
-/**
- * Extract specific properties from props.
- */
-const getProperties = (pageContext: PageContext, edges: ReturnType<typeof useRecipeMetadata>) => {
-  const {
-    frontmatter: { title, imageAlt },
-  } = pageContext;
-  const {
-    node: {
-      exports: { ingredients },
-      frontmatter: {
-        image: {
-          childImageSharp: { fluid },
-        },
-      },
-      parent: { changeTime },
-    },
-  } = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
-
-  return { title, imageAlt, ingredients, fluid, changeTime };
-};
-
 type props = {
-  pageContext: PageContext;
+  pageContext: {
+    frontmatter: {
+      title: string;
+      imageAlt: string;
+    };
+  };
   data: any;
 };
 
 /**
  * Layout for Recipe MDX files.
  */
-export const RecipeLayout = ({ children, pageContext, data }: React.PropsWithChildren<props>) => {
+export const RecipeLayout = ({
+  children,
+  pageContext: {
+    frontmatter: { title, imageAlt },
+  },
+  data,
+}: React.PropsWithChildren<props>) => {
   const edges = useRecipeMetadata();
-  const { title, imageAlt, ingredients, fluid, changeTime } = getProperties(pageContext, edges);
+  const edge = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
+  const { ingredients, fluid, changeTime } = parseRecipeMetadata(edge);
+  // const { title, imageAlt, ingredients, fluid, changeTime } = getProperties(pageContext, edges);
 
   const [tabIndex, setTabIndex] = React.useState(0);
 
