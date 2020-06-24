@@ -11,6 +11,12 @@ type edge = {
       /** Recipe title */
       title: string;
 
+      /** Number of servings produced by the recipe. */
+      servings: number;
+
+      /** Description of (non-servings) quantity produced by the recipe. (e.g. "1 loaf") */
+      recipeYield: string;
+
       /** Recipe image */
       image: {
         childImageSharp: {
@@ -39,6 +45,8 @@ export const useRecipeMetadata = (): edge[] => {
             }
             frontmatter {
               title
+              servings
+              recipeYield
               image {
                 childImageSharp {
                   fluid {
@@ -71,6 +79,9 @@ export const parseRecipeMetadata = ({
   node: {
     exports: { ingredients },
     frontmatter: {
+      title,
+      servings,
+      recipeYield,
       image: {
         childImageSharp: { fluid },
       },
@@ -78,6 +89,9 @@ export const parseRecipeMetadata = ({
     parent: { changeTime },
   },
 }: edge) => ({
+  title,
+  servings,
+  recipeYield,
   ingredients,
   fluid,
   changeTime,

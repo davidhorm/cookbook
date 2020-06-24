@@ -61,6 +61,35 @@ describe('<RecipeSchema>', () => {
       });
     });
 
+    describe('recipeYield', () => {
+      const servings = 6;
+      const recipeYield = '1 loaf';
+
+      it('should render array GIVEN both servings and recipeYield passed in as props', async () => {
+        render(<RecipeSchema {...mockRecipeMetadata} servings={servings} recipeYield={recipeYield} />);
+        await waitFor(() => {
+          const actual = JSON.parse(document.querySelector(structuredDataQuery)?.textContent || '');
+          expect(actual).toStrictEqual({ ...expectedDefaultRecipeSchemaObject, ...{ recipeYield: ['6', '1 loaf'] } });
+        });
+      });
+
+      it('should render number GIVEN servings only passed in as prop', async () => {
+        render(<RecipeSchema {...mockRecipeMetadata} servings={servings} />);
+        await waitFor(() => {
+          const actual = JSON.parse(document.querySelector(structuredDataQuery)?.textContent || '');
+          expect(actual).toStrictEqual({ ...expectedDefaultRecipeSchemaObject, ...{ recipeYield: 6 } });
+        });
+      });
+
+      it('should render string GIVEN recipeYield only passed in as prop', async () => {
+        render(<RecipeSchema {...mockRecipeMetadata} recipeYield={recipeYield} />);
+        await waitFor(() => {
+          const actual = JSON.parse(document.querySelector(structuredDataQuery)?.textContent || '');
+          expect(actual).toStrictEqual({ ...expectedDefaultRecipeSchemaObject, ...{ recipeYield: '1 loaf' } });
+        });
+      });
+    });
+
     it('should render recipeIngredient array GIVEN recipeIngredient props', async () => {
       const recipeIngredient = ['one', 'two'];
       render(<RecipeSchema {...mockRecipeMetadata} recipeIngredient={recipeIngredient} />);

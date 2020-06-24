@@ -30,14 +30,20 @@ export const RecipeLayout = ({
 }: React.PropsWithChildren<props>) => {
   const edges = useRecipeMetadata();
   const edge = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
-  const { ingredients, fluid, changeTime } = parseRecipeMetadata(edge);
-  // const { title, imageAlt, ingredients, fluid, changeTime } = getProperties(pageContext, edges);
+  const { servings, recipeYield, ingredients, fluid, changeTime } = parseRecipeMetadata(edge);
 
   const [tabIndex, setTabIndex] = React.useState(0);
 
   return (
     <Layout>
-      <RecipeSchema name={title} imageSrc={fluid.src} datePublished={changeTime} recipeIngredient={ingredients} />
+      <RecipeSchema
+        name={title}
+        imageSrc={fluid.src}
+        datePublished={changeTime}
+        servings={servings}
+        recipeYield={recipeYield}
+        recipeIngredient={ingredients}
+      />
       <Img fluid={fluid} alt={imageAlt} />
       <h1>{title}</h1>
       <Tabs
