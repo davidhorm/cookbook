@@ -1,9 +1,9 @@
+import Slider from '@material-ui/core/Slider';
 import Tabs from '@material-ui/core/Tabs';
-import { MDXProvider } from '@mdx-js/react';
-import { graphql, Link } from 'gatsby';
+import Typography from '@material-ui/core/Typography';
 import Img from 'gatsby-image';
 import React from 'react';
-import { useRecipeMetadata } from '../../queries/use-recipe-metadata';
+import { parseRecipeMetadata, useRecipeMetadata } from '../../queries/use-recipe-metadata';
 import Layout from '../Layout';
 import { InformationTab, InformationTabPanel } from './InformationTab';
 import { IngredientsTab, IngredientsTabPanel } from './IngredientsTab';
@@ -31,25 +31,40 @@ export const RecipeLayout = ({
   data,
 }: React.PropsWithChildren<props>) => {
   const edges = useRecipeMetadata();
-  const {
-    node: {
-      exports: { ingredients },
-      frontmatter: {
-        image: {
-          childImageSharp: { fluid },
-        },
-      },
-      parent: { changeTime },
-    },
-  } = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
+  const edge = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
+  const { servings, recipeYield, ingredients, fluid, changeTime } = parseRecipeMetadata(edge);
 
   const [tabIndex, setTabIndex] = React.useState(0);
+  const [adjustedServings, setAdjustedServings] = React.useState(servings);
 
   return (
     <Layout>
-      <RecipeSchema name={title} imageSrc={fluid.src} datePublished={changeTime} recipeIngredient={ingredients} />
+      <RecipeSchema
+        name={title}
+        imageSrc={fluid.src}
+        datePublished={changeTime}
+        servings={servings}
+        recipeYield={recipeYield}
+        recipeIngredient={ingredients}
+      />
       <Img fluid={fluid} alt={imageAlt} />
       <h1>{title}</h1>
+      {servings && (
+        <>
+          <Typography id="servings" style={{ marginBottom: '2em' }} gutterBottom>
+            Servings
+          </Typography>
+          <Slider
+            marks
+            defaultValue={servings}
+            min={1}
+            max={24}
+            aria-labelledby="servings"
+            valueLabelDisplay="on"
+            onChange={(_, value) => setAdjustedServings(Array.isArray(value) ? value[0] : value)}
+          />
+        </>
+      )}
       <Tabs
         value={tabIndex}
         onChange={(event: React.ChangeEvent<{}>, newValue: number) => setTabIndex(newValue)}
@@ -61,8 +76,8 @@ export const RecipeLayout = ({
         <InformationTab />
       </Tabs>
       <IngredientsTabPanel hidden={tabIndex !== 0} ingredients={ingredients} />
-      <InstructionsTabPanel hidden={tabIndex !== 1}>
-        <MDXProvider components={{ Link, graphql }}>{children}</MDXProvider>
+      <InstructionsTabPanel hidden={tabIndex !== 1} ratio={adjustedServings / servings}>
+        {children}
       </InstructionsTabPanel>
       <InformationTabPanel hidden={tabIndex !== 2} />
     </Layout>

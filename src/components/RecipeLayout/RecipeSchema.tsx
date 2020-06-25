@@ -2,6 +2,30 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useSiteMetadata } from '../../queries/use-site-metadata';
 
+/**
+ * The quantity produced by the recipe. Specify the number of servings produced from this recipe with just a number.
+ * If you wish to use a different unit (for example, number of items), you may include additional yields. This is required
+ * if you specify any nutritional information per serving (such as nutrition.calories).
+ *
+ * @param servings - Number of servings
+ * @param recipeYield - Number of items
+ */
+const parseRecipeYield = (servings?: number, recipeYield?: string) => {
+  if (servings && recipeYield) {
+    return { recipeYield: [`${servings}`, recipeYield] };
+  }
+
+  if (servings) {
+    return { recipeYield: servings };
+  }
+
+  if (recipeYield) {
+    return { recipeYield };
+  }
+
+  return {};
+};
+
 type props = {
   /** The name of the dish. */
   name: string;
@@ -19,16 +43,21 @@ type props = {
   /** The name of the person that wrote the recipe. Defaults to the author set in Site Metadata. */
   author?: string;
 
+  /** Number of servings produced by the recipe. */
+  servings?: number;
+
+  /**
+   * Description of (non-servings) quantity produced by the recipe.
+   * @example '1 loaf'
+   * */
+  recipeYield?: string;
+
   /** List of ingredients (and amounts) used in the recipe. */
   recipeIngredient?: string[];
 
   /**
    * A short summary describing the dish.
    * description: string;
-   *
-   * The quantity produced by the recipe. Specify the number of servings produced from this recipe with just a number.
-   * If you wish to use a different unit (for example, number of items), you may include additional yields.
-   * recipeYield: string | string[];
    *
    * The time it takes to actually cook the dish. (PTaHbM format)
    * cookTime: string;
@@ -58,7 +87,7 @@ type props = {
  */
 const getRecipeSchema = (
   siteMetadata: ReturnType<typeof useSiteMetadata>,
-  { name, imageSrc, datePublished, author, recipeIngredient }: props
+  { name, imageSrc, datePublished, author, servings, recipeYield, recipeIngredient }: props
 ) => {
   const recipeSchema = {
     '@context': 'https://schema.org/',
@@ -70,6 +99,7 @@ const getRecipeSchema = (
       '@type': 'Person',
       'name': `${author || siteMetadata.author}`,
     },
+    ...parseRecipeYield(servings, recipeYield),
     ...(Array.isArray(recipeIngredient) && recipeIngredient.length > 0 ? { recipeIngredient } : {}),
   };
 

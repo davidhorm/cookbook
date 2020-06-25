@@ -95,6 +95,9 @@ module.exports = {
         ignore: ['.tsx'],
       },
     ],
+
+    // Disable because of <MDXProvider /> short codes
+    'react/display-name': 'off',
   },
   overrides: [
     {
