@@ -1,4 +1,6 @@
+import Slider from '@material-ui/core/Slider';
 import Tabs from '@material-ui/core/Tabs';
+import Typography from '@material-ui/core/Typography';
 import Img from 'gatsby-image';
 import React from 'react';
 import { parseRecipeMetadata, useRecipeMetadata } from '../../queries/use-recipe-metadata';
@@ -33,6 +35,7 @@ export const RecipeLayout = ({
   const { servings, recipeYield, ingredients, fluid, changeTime } = parseRecipeMetadata(edge);
 
   const [tabIndex, setTabIndex] = React.useState(0);
+  const [adjustedServings, setAdjustedServings] = React.useState(servings);
 
   return (
     <Layout>
@@ -46,6 +49,22 @@ export const RecipeLayout = ({
       />
       <Img fluid={fluid} alt={imageAlt} />
       <h1>{title}</h1>
+      {servings && (
+        <>
+          <Typography id="servings" style={{ marginBottom: '2em' }} gutterBottom>
+            Servings
+          </Typography>
+          <Slider
+            marks
+            defaultValue={servings}
+            min={1}
+            max={24}
+            aria-labelledby="servings"
+            valueLabelDisplay="on"
+            onChange={(_, value) => setAdjustedServings(Array.isArray(value) ? value[0] : value)}
+          />
+        </>
+      )}
       <Tabs
         value={tabIndex}
         onChange={(event: React.ChangeEvent<{}>, newValue: number) => setTabIndex(newValue)}
@@ -57,7 +76,9 @@ export const RecipeLayout = ({
         <InformationTab />
       </Tabs>
       <IngredientsTabPanel hidden={tabIndex !== 0} ingredients={ingredients} />
-      <InstructionsTabPanel hidden={tabIndex !== 1}>{children}</InstructionsTabPanel>
+      <InstructionsTabPanel hidden={tabIndex !== 1} ratio={adjustedServings / servings}>
+        {children}
+      </InstructionsTabPanel>
       <InformationTabPanel hidden={tabIndex !== 2} />
     </Layout>
   );

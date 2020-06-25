@@ -13,15 +13,18 @@ export const InstructionsTab = ({ ...other }) => (
 );
 
 type props = {
+  /** Set to `true` to hide panel content. */
   hidden: boolean;
+
+  /** Ratio of the adjusted servings to the original servings. */
+  ratio: number;
 };
-export const InstructionsTabPanel = ({ children, hidden }: React.PropsWithChildren<props>) => {
+export const InstructionsTabPanel = ({ children, hidden, ratio }: React.PropsWithChildren<props>) => {
   const shortCodes = {
     Link,
-    Ingredient: (properties: any) => <Ingredient ratio="1" {...properties} />,
+    Ingredient: (properties: any) => <Ingredient ratio={ratio} {...properties} />,
   };
 
-  // TODO: also add slider
   return (
     <section role="tabpanel" hidden={hidden} id={tabPanelId} aria-labelledby={tabId}>
       <MDXProvider components={shortCodes}>{children}</MDXProvider>
