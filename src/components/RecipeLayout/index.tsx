@@ -3,7 +3,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import Img from 'gatsby-image';
 import React from 'react';
-import { parseRecipeMetadata, useRecipeMetadata } from '../../queries/use-recipe-metadata';
+import { Frontmatter, parseRecipeMetadata, useRecipeMetadata } from '../../queries/use-recipe-metadata';
 import Layout from '../Layout';
 import { InformationTab, InformationTabPanel } from './InformationTab';
 import { IngredientsTab, IngredientsTabPanel } from './IngredientsTab';
@@ -12,10 +12,7 @@ import { RecipeSchema } from './RecipeSchema';
 
 type props = {
   pageContext: {
-    frontmatter: {
-      title: string;
-      imageAlt: string;
-    };
+    frontmatter: Frontmatter;
   };
   data: any;
 };
@@ -32,7 +29,11 @@ export const RecipeLayout = ({
 }: React.PropsWithChildren<props>) => {
   const edges = useRecipeMetadata();
   const edge = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
-  const { servings, recipeYield, ingredients, fluid, changeTime } = parseRecipeMetadata(edge);
+  const { servings, recipeYield, fluid, mdxAST, changeTime } = parseRecipeMetadata(edge);
+
+  const ingredients = mdxAST?.children
+    ?.filter(({ type, name }) => type === 'mdxBlockElement' && name === 'Ingredient')
+    .map(({ attributes }) => attributes?.filter(({ name }) => name === 'name')[0].value || '');
 
   const [tabIndex, setTabIndex] = React.useState(0);
   const [adjustedServings, setAdjustedServings] = React.useState(servings);
@@ -45,7 +46,6 @@ export const RecipeLayout = ({
         datePublished={changeTime}
         servings={servings}
         recipeYield={recipeYield}
-        recipeIngredient={ingredients}
       />
       <Img fluid={fluid} alt={imageAlt} />
       <h1>{title}</h1>
