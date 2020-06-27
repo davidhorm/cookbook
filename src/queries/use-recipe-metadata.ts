@@ -22,7 +22,7 @@ export type Frontmatter = {
   };
 };
 
-type MdxAst = {
+export type MdxAst = {
   type: string;
   name?: string;
   value?: string;

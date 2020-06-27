@@ -8,6 +8,7 @@ import Layout from '../Layout';
 import { InformationTab, InformationTabPanel } from './InformationTab';
 import { IngredientsTab, IngredientsTabPanel } from './IngredientsTab';
 import { InstructionsTab, InstructionsTabPanel } from './InstructionsTab';
+import { getIngredientsAttributes } from './mdx-ast-parser.service';
 import { RecipeSchema } from './RecipeSchema';
 
 type props = {
@@ -30,10 +31,6 @@ export const RecipeLayout = ({
   const edges = useRecipeMetadata();
   const edge = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
   const { servings, recipeYield, fluid, mdxAST, changeTime } = parseRecipeMetadata(edge);
-
-  const ingredients = mdxAST?.children
-    ?.filter(({ type, name }) => type === 'mdxBlockElement' && name === 'Ingredient')
-    .map(({ attributes }) => attributes?.filter(({ name }) => name === 'name')[0].value || '');
 
   const [tabIndex, setTabIndex] = React.useState(0);
   const [adjustedServings, setAdjustedServings] = React.useState(servings);
@@ -75,7 +72,11 @@ export const RecipeLayout = ({
         <InstructionsTab />
         <InformationTab />
       </Tabs>
-      <IngredientsTabPanel hidden={tabIndex !== 0} ingredients={ingredients} />
+      <IngredientsTabPanel
+        hidden={tabIndex !== 0}
+        ratio={adjustedServings / servings}
+        ingredientsAttributes={getIngredientsAttributes(mdxAST)}
+      />
       <InstructionsTabPanel hidden={tabIndex !== 1} ratio={adjustedServings / servings}>
         {children}
       </InstructionsTabPanel>

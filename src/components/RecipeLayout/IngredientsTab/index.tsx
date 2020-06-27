@@ -1,6 +1,7 @@
 import Tab from '@material-ui/core/Tab';
 import ListIcon from '@material-ui/icons/List';
 import React from 'react';
+import { Ingredient } from '../../Ingredient';
 
 const tabId = 'ingredient-tab';
 const tabPanelId = 'ingredient-tabpanel';
@@ -11,14 +12,17 @@ export const IngredientsTab = ({ ...other }) => (
 
 type props = {
   hidden: boolean;
-  ingredients?: string[];
+  ratio: number;
+  ingredientsAttributes: object[];
 };
-export const IngredientsTabPanel = ({ hidden, ingredients = [] }: props) => (
+export const IngredientsTabPanel = ({ hidden, ratio, ingredientsAttributes }: props) => (
   <section role="tabpanel" hidden={hidden} id={tabPanelId} aria-labelledby={tabId}>
-    <ol>
-      {ingredients.map((ingredient) => (
-        <li key={ingredient}>{ingredient}</li>
+    <ul>
+      {ingredientsAttributes.map(({ amount, unit, name }: any) => (
+        <li key={name}>
+          <Ingredient ratio={ratio} amount={amount} unit={unit} name={name} />
+        </li>
       ))}
-    </ol>
+    </ul>
   </section>
 );
