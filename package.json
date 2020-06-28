@@ -68,7 +68,7 @@
     "start:clean": "gatsby clean && npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "jest",
+    "test": "jest --verbose --collectCoverage",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./"
   },
   "repository": {
