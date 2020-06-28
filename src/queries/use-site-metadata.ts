@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { graphql, useStaticQuery } from 'gatsby';
 
 type siteMetadata = {
