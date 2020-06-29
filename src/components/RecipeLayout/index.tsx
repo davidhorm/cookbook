@@ -68,9 +68,9 @@ export const RecipeLayout = ({
         aria-label="Recipe Navigation Tabs"
         variant="fullWidth"
       >
-        <IngredientsTab />
-        <InstructionsTab />
-        <InformationTab />
+        <IngredientsTab component="h2" />
+        <InstructionsTab component="h2" />
+        <InformationTab component="h2" />
       </Tabs>
       <IngredientsTabPanel
         hidden={tabIndex !== 0}
