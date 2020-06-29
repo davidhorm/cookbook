@@ -1,5 +1,5 @@
 import { MdxAst } from '../../queries/use-recipe-metadata';
-import { getIngredientsAttributes } from './mdx-ast-parser.service';
+import { getHeaderId, getIngredientsAttributes } from './recipe-layout.service';
 
 describe('getIngredientsAttributes()', () => {
   it('should return an empty array GIVEN an empty MdxAst object passed in', () => {
@@ -87,5 +87,17 @@ describe('getIngredientsAttributes()', () => {
       const expectedWithNaNAmountValue = [{ ...expected[0], amount: 0 }];
       expect(actual).toEqual(expectedWithNaNAmountValue);
     });
+  });
+});
+
+describe('getHeaderId()', () => {
+  it('should format the header content as the id', () => {
+    const actual = getHeaderId('HELLO WORLD ONE TWO');
+    expect(actual).toBe('hello-world-one-two');
+  });
+
+  it('should return blank string if no value passed in', () => {
+    const actual = getHeaderId();
+    expect(actual).toBe('');
   });
 });

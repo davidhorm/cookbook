@@ -28,3 +28,6 @@ export const getIngredientsAttributes = (mdxAST: MdxAst) =>
     .filter(getIngredientElements)
     .map(getAttributeNameValuePairs)
     .map(combineNameValuePairs) || [];
+
+/** Convert the header content to the ID value. */
+export const getHeaderId = (content?: string): string => content?.toLowerCase()?.replace(/(\s+)/g, '-') || '';

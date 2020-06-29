@@ -8,7 +8,7 @@ import Layout from '../Layout';
 import { InformationTab, InformationTabPanel } from './InformationTab';
 import { IngredientsTab, IngredientsTabPanel } from './IngredientsTab';
 import { InstructionsTab, InstructionsTabPanel } from './InstructionsTab';
-import { getIngredientsAttributes } from './mdx-ast-parser.service';
+import { getIngredientsAttributes } from './recipe-layout.service';
 import { RecipeSchema } from './RecipeSchema';
 
 type props = {

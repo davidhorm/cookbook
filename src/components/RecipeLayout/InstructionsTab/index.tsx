@@ -4,6 +4,7 @@ import { MDXProvider } from '@mdx-js/react';
 import { Link } from 'gatsby';
 import React from 'react';
 import { Ingredient } from '../../Ingredient';
+import { getHeaderId } from '../recipe-layout.service';
 
 const tabId = 'instruction-tab';
 const tabPanelId = 'instruction-tabpanel';
@@ -23,6 +24,12 @@ export const InstructionsTabPanel = ({ children, hidden, ratio }: React.PropsWit
   const shortCodes = {
     Link,
     Ingredient: (properties: any) => <Ingredient ratio={ratio} {...properties} />,
+    // Convert MDX # into h3 for easier authoring
+    h1: (properties: any) => (
+      <h3 id={getHeaderId(properties.children)} {...properties}>
+        {properties.children}
+      </h3>
+    ),
   };
 
   return (
