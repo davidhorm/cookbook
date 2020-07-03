@@ -69,7 +69,7 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "jest --verbose --collectCoverage",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./"
+    "lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.ts,.tsx ./"
   },
   "repository": {
     "type": "git",

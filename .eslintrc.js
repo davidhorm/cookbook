@@ -137,7 +137,7 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ['public', '__mocks__', 'setup-test-env.js'],
+  ignorePatterns: ['__mocks__', 'setup-test-env.js'],
   settings: {
     jsdoc: {
       mode: 'typescript', // Allows @template. https://github.com/gajus/eslint-plugin-jsdoc#mode
