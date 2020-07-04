@@ -8,7 +8,7 @@ import Layout from '../Layout';
 import { InformationTab, InformationTabPanel } from './InformationTab';
 import { IngredientsTab, IngredientsTabPanel } from './IngredientsTab';
 import { InstructionsTab, InstructionsTabPanel } from './InstructionsTab';
-import { getIngredientsAttributes } from './recipe-layout.service';
+import { getIngredientsProperties } from './recipe-layout.service';
 import { RecipeSchema } from './RecipeSchema';
 
 type props = {
@@ -30,7 +30,7 @@ export const RecipeLayout = ({
 }: React.PropsWithChildren<props>) => {
   const edges = useRecipeMetadata();
   const edge = edges.filter((edge) => edge.node.frontmatter.title === title)[0];
-  const { servings, recipeYield, fluid, mdxAST, changeTime } = parseRecipeMetadata(edge);
+  const { servings, recipeYield, fluid, changeTime } = parseRecipeMetadata(edge);
 
   const [tabIndex, setTabIndex] = React.useState(0);
   const [adjustedServings, setAdjustedServings] = React.useState(servings);
@@ -75,7 +75,7 @@ export const RecipeLayout = ({
       <IngredientsTabPanel
         hidden={tabIndex !== 0}
         ratio={adjustedServings / servings}
-        ingredientsAttributes={getIngredientsAttributes(mdxAST)}
+        ingredientsAttributes={getIngredientsProperties(children)}
       />
       <InstructionsTabPanel hidden={tabIndex !== 1} ratio={adjustedServings / servings}>
         {children}

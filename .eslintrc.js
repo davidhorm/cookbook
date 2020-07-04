@@ -96,6 +96,12 @@ module.exports = {
       },
     ],
 
+    // Easier to read this way, and typescript should protect us
+    'unicorn/no-fn-reference-in-iterator': 'off',
+
+    // Was recommended by people who don't know functional programming
+    'unicorn/no-reduce': 'off',
+
     // Disable because of <MDXProvider /> short codes
     'react/display-name': 'off',
   },
