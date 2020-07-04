@@ -22,19 +22,9 @@ export type Frontmatter = {
   };
 };
 
-export type MdxAst = {
-  type: string;
-  name?: string;
-  value?: string;
-  attributes?: MdxAst[];
-  children?: MdxAst[];
-};
-
 type edge = {
   node: {
     frontmatter: Frontmatter;
-    /** MDX syntax tree with embedded JSX */
-    mdxAST: MdxAst;
     parent: {
       /** Recipe publish date */
       changeTime: Date;
@@ -64,7 +54,6 @@ export const useRecipeMetadata = (): edge[] => {
                 }
               }
             }
-            mdxAST
             parent {
               ... on File {
                 changeTime
@@ -96,7 +85,6 @@ export const parseRecipeMetadata = ({
         childImageSharp: { fluid },
       },
     },
-    mdxAST,
     parent: { changeTime },
   },
 }: edge) => ({
@@ -105,6 +93,5 @@ export const parseRecipeMetadata = ({
   recipeYield,
   fluid,
   imageAlt,
-  mdxAST,
   changeTime,
 });

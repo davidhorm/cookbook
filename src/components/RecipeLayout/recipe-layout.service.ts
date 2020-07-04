@@ -1,33 +1,38 @@
-import { MdxAst } from '../../queries/use-recipe-metadata';
+type IngredientElement = {
+  amount: string;
+  name: string;
+  unit: string;
+  mdxType: string;
+};
 
-/** Flatten children elements to a single level. */
-const flattenElements = (accumulator: MdxAst[], currentValue: MdxAst): MdxAst[] => {
-  const { type, name, attributes } = currentValue;
-  const children = currentValue.children?.reduce(flattenElements, []) || [];
-  return [...accumulator, { type, name, attributes }, ...children];
+/** Flatten children elements props to a single level. */
+const flattenProperties = (accumulator: React.ReactNodeArray, currentValue: React.ReactNode): React.ReactNodeArray => {
+  const element = currentValue as React.ReactElement;
+  if (element && element.props) {
+    const children: React.ReactNodeArray = element.props.children || [];
+    const grandChildren: React.ReactNodeArray =
+      (Array.isArray(children) && children.reduce(flattenProperties, [])) || [];
+    return [...accumulator, element.props, ...grandChildren];
+  }
+
+  return accumulator;
 };
 
 /** Filter by Ingredient JSX component. */
-const getIngredientElements = ({ type, name }: MdxAst) =>
-  (type === 'mdxBlockElement' || type === 'mdxSpanElement') && name === 'Ingredient';
+const filterByIngredientType = (node: React.ReactNode) => (node as IngredientElement).mdxType === 'Ingredient';
 
-/** Extract Name and Value pairs into array of objects. */
-const getAttributeNameValuePairs = ({ attributes }: MdxAst) =>
-  attributes?.map(({ name = '', value = '' }) => {
-    return { [name]: name === 'amount' ? Number.parseInt(value, 10) || 0 : value };
-  }) || [];
+/** Extract props from Ingredient JSX component. */
+const extractProperties = (node: React.ReactNode) => {
+  const { amount, name, unit } = node as IngredientElement;
+  return { amount, name, unit };
+};
 
-/** Combine array of objects into single object. */
-const combineNameValuePairs = (nameValuePair: object[]) =>
-  nameValuePair?.reduce((accumulator: object, currentValue: object) => ({ ...accumulator, ...currentValue }), {});
-
-/** Get object to spread as <Ingredient /> props for each Ingredient in MDX. */
-export const getIngredientsAttributes = (mdxAST: MdxAst) =>
-  mdxAST?.children
-    ?.reduce(flattenElements, [])
-    .filter(getIngredientElements)
-    .map(getAttributeNameValuePairs)
-    .map(combineNameValuePairs) || [];
+/** Get array of object to spread as <Ingredient /> props for each Ingredient in MDX. */
+export const getIngredientsProperties = (children: React.ReactNode) =>
+  (children as React.ReactNodeArray)
+    ?.reduce(flattenProperties, [])
+    ?.filter(filterByIngredientType)
+    .map(extractProperties) || [];
 
 /** Convert the header content to the ID value. */
 export const getHeaderId = (content?: string): string => content?.toLowerCase()?.replace(/(\s+)/g, '-') || '';
