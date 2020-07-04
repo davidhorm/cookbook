@@ -3,15 +3,14 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
 import React from 'react';
 
-const activeStep = 0;
-
-const navigateToHeaderId = (headerId: string) => console.log(headerId);
-
 type props = {
   /** List of header ids. */
   headerIds: string[];
+
+  activeStep: number;
+  navigateToHeaderId: Function;
 };
-const SectionNav = ({ headerIds }: props) => (
+const SectionNav = ({ headerIds, activeStep, navigateToHeaderId }: props) => (
   <nav>
     <Stepper activeStep={activeStep} orientation="vertical">
       {headerIds.map((headerId) => (
@@ -24,3 +23,4 @@ const SectionNav = ({ headerIds }: props) => (
 );
 
 export { SectionNav };
+

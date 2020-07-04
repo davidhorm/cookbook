@@ -22,6 +22,15 @@ type props = {
   ratio: number;
 };
 export const InstructionsTabPanel = ({ children, hidden, ratio }: React.PropsWithChildren<props>) => {
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  const headerIds = getHeaderIds(children);
+
+  const navigateToHeaderId = (headerId: string) => {
+    const index = headerIds.indexOf(headerId);
+    setActiveStep(index);
+  };
+
   const shortCodes = {
     Link,
     Ingredient: (properties: any) => <Ingredient ratio={ratio} {...properties} />,
@@ -36,7 +45,11 @@ export const InstructionsTabPanel = ({ children, hidden, ratio }: React.PropsWit
   return (
     <section role="tabpanel" hidden={hidden} id={tabPanelId} aria-labelledby={tabId}>
       <MDXProvider components={shortCodes}>{children}</MDXProvider>
-      <SectionNav headerIds={getHeaderIds(children)}></SectionNav>
+      <SectionNav
+        headerIds={headerIds}
+        activeStep={activeStep}
+        navigateToHeaderId={navigateToHeaderId}
+      ></SectionNav>
     </section>
   );
 };
