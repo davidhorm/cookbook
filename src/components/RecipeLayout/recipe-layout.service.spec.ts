@@ -1,4 +1,4 @@
-import { getHeaderId, getIngredientsProperties } from './recipe-layout.service';
+import { getHeaderId, getHeaderIds, getIngredientsProperties } from './recipe-layout.service';
 
 describe('Parse children prop', () => {
   const componentInlineText: React.ReactNodeArray = [
@@ -17,8 +17,16 @@ describe('Parse children prop', () => {
 
   const expectedComponentInlineText = [{ amount: '1', unit: 'teaspoons', name: 'pepper' }];
 
+  const headerElements: React.ReactNodeArray = [
+    { props: { originalType: 'h1', mdxType: 'h1', children: 'First Head' } },
+    { props: { originalType: 'h1', mdxType: 'h1', children: 'Segunda Cabeza' } },
+    { props: { originalType: 'h1', mdxType: 'h1', children: 'Troisieme Tete' } },
+  ];
+
+  const expectedHeaderIds = ['first-head', 'segunda-cabeza', 'troisieme-tete'];
+
   const children: React.ReactNodeArray = [
-    { props: { originalType: 'h1', mdxType: 'h1', children: 'Header Text' } },
+    ...headerElements,
     ...componentInlineText,
     { props: { amount: '2', unit: 'cups', name: 'water', mdxType: 'Ingredient' } },
     { props: { amount: '3', unit: 'tablespoons', name: 'salt', mdxType: 'Ingredient' } },
@@ -39,6 +47,13 @@ describe('Parse children prop', () => {
     it('should return prop values of all <Ingredient /> components', () => {
       const actual = getIngredientsProperties(children);
       expect(actual).toEqual(expectedIngredientsProperties);
+    });
+  });
+
+  describe('getHeaderIds()', () => {
+    it('should parse to array header ids.', () => {
+      const actual = getHeaderIds(children);
+      expect(actual).toEqual(expectedHeaderIds);
     });
   });
 });

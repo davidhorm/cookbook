@@ -4,7 +4,8 @@ import { MDXProvider } from '@mdx-js/react';
 import { Link } from 'gatsby';
 import React from 'react';
 import { Ingredient } from '../../Ingredient';
-import { getHeaderId } from '../recipe-layout.service';
+import { getHeaderId, getHeaderIds } from '../recipe-layout.service';
+import { SectionNav } from './SectionNav';
 
 const tabId = 'instruction-tab';
 const tabPanelId = 'instruction-tabpanel';
@@ -35,6 +36,7 @@ export const InstructionsTabPanel = ({ children, hidden, ratio }: React.PropsWit
   return (
     <section role="tabpanel" hidden={hidden} id={tabPanelId} aria-labelledby={tabId}>
       <MDXProvider components={shortCodes}>{children}</MDXProvider>
+      <SectionNav headerIds={getHeaderIds(children)}></SectionNav>
     </section>
   );
 };

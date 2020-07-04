@@ -36,3 +36,14 @@ export const getIngredientsProperties = (children: React.ReactNode) =>
 
 /** Convert the header content to the ID value. */
 export const getHeaderId = (content?: string): string => content?.toLowerCase()?.replace(/(\s+)/g, '-') || '';
+
+/** Filter `children` prop by <h1 /> type. */
+const filterByHeaderType = (node: React.ReactNode) => (node as React.ReactElement)?.props?.mdxType === 'h1';
+
+/** Convert header text to header id. */
+const convertToHeaderId = (node: React.ReactNode) => getHeaderId((node as React.ReactElement)?.props?.children || '');
+
+/** Get an array of header ids from the children prop. */
+export const getHeaderIds = (children: React.ReactNode) => {
+  return (children as React.ReactNodeArray).filter(filterByHeaderType).map(convertToHeaderId);
+};
