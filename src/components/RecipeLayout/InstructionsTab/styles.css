@@ -1,0 +1,15 @@
+.instructionTabPanel {
+  display: grid;
+  grid-template-areas:
+    'instruction sectionNav';
+}
+
+.instruction {
+  grid-area: instruction;
+}
+
+.sectionNav {
+  grid-area: sectionNav;
+  padding-left: 0.5em;
+  /* TODO: css sticky top */
+}

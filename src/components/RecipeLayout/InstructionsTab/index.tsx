@@ -6,6 +6,7 @@ import React from 'react';
 import { Ingredient } from '../../Ingredient';
 import { getHeaderId, getHeaderIds } from '../recipe-layout.service';
 import { SectionNav } from './SectionNav';
+import './styles.css';
 
 const tabId = 'instruction-tab';
 const tabPanelId = 'instruction-tabpanel';
@@ -43,13 +44,17 @@ export const InstructionsTabPanel = ({ children, hidden, ratio }: React.PropsWit
   };
 
   return (
-    <section role="tabpanel" hidden={hidden} id={tabPanelId} aria-labelledby={tabId}>
-      <MDXProvider components={shortCodes}>{children}</MDXProvider>
+    <section className="instructionTabPanel" role="tabpanel" hidden={hidden} id={tabPanelId} aria-labelledby={tabId}>
+      <article className="instruction" hidden={hidden}>
+        <MDXProvider components={shortCodes}>{children}</MDXProvider>
+      </article>
       <SectionNav
+        className="sectionNav"
+        hidden={hidden}
         headerIds={headerIds}
         activeStep={activeStep}
         navigateToHeaderId={navigateToHeaderId}
-      ></SectionNav>
+      />
     </section>
   );
 };
