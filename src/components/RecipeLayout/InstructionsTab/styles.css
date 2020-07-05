@@ -11,5 +11,11 @@
 .sectionNav {
   grid-area: sectionNav;
   padding-left: 0.5em;
-  /* TODO: css sticky top */
+}
+
+.stickyTop {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 2rem;
+  height: calc(100vh - 5rem); /* TODO: replace 5rem with footer height + site padding */
 }

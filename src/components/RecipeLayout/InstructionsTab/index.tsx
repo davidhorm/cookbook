@@ -49,7 +49,7 @@ export const InstructionsTabPanel = ({ children, hidden, ratio }: React.PropsWit
         <MDXProvider components={shortCodes}>{children}</MDXProvider>
       </article>
       <SectionNav
-        className="sectionNav"
+        className="sectionNav stickyTop"
         hidden={hidden}
         headerIds={headerIds}
         activeStep={activeStep}
