@@ -17,15 +17,15 @@ type props = {
   /** Current Step to highlight. */
   activeStep: number;
 
-  /** Callback to navigate to specific header id. */
-  navigateToHeaderId: Function;
+  /** Callback to scroll to specific header id. */
+  scrollToHeaderId: Function;
 };
 const SectionNav = ({
   className,
   hidden,
   headerIds,
   activeStep,
-  navigateToHeaderId,
+  scrollToHeaderId,
 }: props & React.HTMLAttributes<HTMLElement>) => {
   const classes = useStyles();
 
@@ -34,7 +34,7 @@ const SectionNav = ({
       <Stepper activeStep={activeStep} orientation="vertical" nonLinear classes={{ root: classes.zeroPadding }}>
         {headerIds.map((headerId) => (
           <Step key={headerId}>
-            <StepLabel onClick={() => navigateToHeaderId(headerId)} classes={{ iconContainer: classes.zeroPadding }} />
+            <StepLabel onClick={() => scrollToHeaderId(headerId)} classes={{ iconContainer: classes.zeroPadding }} />
           </Step>
         ))}
       </Stepper>

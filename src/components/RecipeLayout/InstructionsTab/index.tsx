@@ -5,6 +5,7 @@ import { Link } from 'gatsby';
 import React from 'react';
 import { Ingredient } from '../../Ingredient';
 import { getHeaderId, getHeaderIds } from '../recipe-layout.service';
+import { useSectionHeaderEffects } from './section-header.effects';
 import { SectionNav } from './SectionNav';
 import './styles.css';
 
@@ -23,14 +24,8 @@ type props = {
   ratio: number;
 };
 export const InstructionsTabPanel = ({ children, hidden, ratio }: React.PropsWithChildren<props>) => {
-  const [activeStep, setActiveStep] = React.useState(0);
-
   const headerIds = getHeaderIds(children);
-
-  const navigateToHeaderId = (headerId: string) => {
-    const index = headerIds.indexOf(headerId);
-    setActiveStep(index);
-  };
+  const [activeStep, scrollToHeaderId] = useSectionHeaderEffects(headerIds);
 
   const shortCodes = {
     Link,
@@ -53,7 +48,7 @@ export const InstructionsTabPanel = ({ children, hidden, ratio }: React.PropsWit
         hidden={hidden}
         headerIds={headerIds}
         activeStep={activeStep}
-        navigateToHeaderId={navigateToHeaderId}
+        scrollToHeaderId={scrollToHeaderId}
       />
     </section>
   );
