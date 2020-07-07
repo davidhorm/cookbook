@@ -3,17 +3,38 @@ import React from 'react';
 export const useSectionHeaderEffects = (headerIds: string[]) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
+  // Keep track of which headers are visible
   React.useEffect(() => {
-    const handleScroll = (event: Event) => {
-      console.log(event);
-      const index = headerIds
-        .map((headerId) => (document.querySelector(`#${headerId}`)?.getBoundingClientRect().top || 0) <= 16) // 16px = 1em
-        .lastIndexOf(true);
-      setActiveStep(index);
-    };
+    // Create object where header ids are keys, and visibility is value
+    const visibleHeaders = headerIds.reduce(
+      (previousValue, currentValue) => ({ ...previousValue, [currentValue]: false }),
+      {}
+    );
 
-    document.addEventListener('scroll', handleScroll);
-    return () => document.removeEventListener('click', handleScroll);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const headerId = entry.target.id;
+          Object.assign(visibleHeaders, { [headerId]: entry.isIntersecting });
+        });
+      },
+      { threshold: 1 }
+    );
+
+    const headerElements = headerIds.map((headerId) => document.querySelector(`#${headerId}`));
+    headerElements.forEach((target) => {
+      if (target) {
+        observer.observe(target);
+      }
+    });
+
+    return () => {
+      headerElements.forEach((target) => {
+        if (target) {
+          observer.unobserve(target);
+        }
+      });
+    };
   }, [headerIds]);
 
   /**
